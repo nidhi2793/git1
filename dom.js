@@ -115,15 +115,28 @@
 
 var form = document.getElementById("addForm");
 var itemList = document.getElementById("items");
+var filter = document.getElementById("filter");
+
 form.addEventListener("submit", addItem);
 itemList.addEventListener("click", removeItem);
-
+filter.addEventListener("keyup", filterItems);
 function addItem(e) {
   e.preventDefault();
   var newItem = document.getElementById("item").value;
+  var description = document.getElementById("description").value;
   let li = document.createElement("li");
   li.className = "list-group-item";
-  li.appendChild(document.createTextNode(newItem));
+  let span = document.createElement("span");
+  let p1 = document.createElement("p");
+  let p2 = document.createElement("p");
+  p1.innerText = newItem;
+  p2.innerText = description;
+  span.appendChild(p1);
+  span.appendChild(p2);
+  li.appendChild(span);
+
+  // let insert = newItem + " " + description;
+  // li.appendChild(document.createTextNode(newItem));
 
   var deleteBtn = document.createElement("button");
   deleteBtn.className = "btn btn-danger btn-sm float-right delete";
@@ -145,4 +158,18 @@ function removeItem(e) {
       itemList.removeChild(li);
     }
   }
+}
+
+function filterItems(e) {
+  var text = e.target.value.toLowerCase();
+  var items = itemList.getElementsByTagName("li");
+
+  Array.from(items).forEach(function (item) {
+    var itemName = item.firstChild.textContent;
+    if (itemName.toLowerCase().indexOf(text) != -1) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
 }
