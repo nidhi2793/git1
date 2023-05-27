@@ -62,52 +62,87 @@
 // Traversing dom
 //parent node
 
-let items = document.querySelector("#items");
+// let items = document.querySelector("#items");
 // console.log(items.parentNode);
 
 // items.parentNode.style.backgroundColor = "grey";
 // console.log(items.parentNode.parentNode);
 
-console.log(items.parentElement);
+// console.log(items.parentElement);
 
-items.parentElement.style.backgroundColor = "grey";
-console.log(items.parentElement.parentElement);
+// items.parentElement.style.backgroundColor = "grey";
+// console.log(items.parentElement.parentElement);
 
-console.log(items.childNodes);
-items.childNodes[1].style.color = "red";
+// console.log(items.childNodes);
+// items.childNodes[1].style.color = "red";
 
-console.log(items.lastElementChild);
+// console.log(items.lastElementChild);
 
-console.log(items.children[1]);
-items.children[1].style.fontWeight = "bold";
-console.log(items.firstChild);
-console.log(items.firstElementChild);
-items.firstElementChild.style.color = "blue";
-items.lastElementChild.textContent = "Bye";
+// console.log(items.children[1]);
+// items.children[1].style.fontWeight = "bold";
+// console.log(items.firstChild);
+// console.log(items.firstElementChild);
+// items.firstElementChild.style.color = "blue";
+// items.lastElementChild.textContent = "Bye";
 
-console.log(items.nextSibling);
-console.log(items.previousSibling);
-console.log(items.previousElementSibling);
-items.previousElementSibling.style.color = "green";
+// console.log(items.nextSibling);
+// console.log(items.previousSibling);
+// console.log(items.previousElementSibling);
+// items.previousElementSibling.style.color = "green";
 
-var newDiv = document.createElement("div");
-newDiv.id = "hello";
-newDiv.className = "helloclass";
-newDiv.setAttribute("title", "Hello Div");
-var newDivText = document.createTextNode("Hello");
-newDiv.appendChild(newDivText);
-var container = document.querySelector("header .container");
-var h1 = document.querySelector("header h1");
-console.log(container);
+// var newDiv = document.createElement("div");
+// newDiv.id = "hello";
+// newDiv.className = "helloclass";
+// newDiv.setAttribute("title", "Hello Div");
+// var newDivText = document.createTextNode("Hello");
+// newDiv.appendChild(newDivText);
+// var container = document.querySelector("header .container");
+// var h1 = document.querySelector("header h1");
+// console.log(container);
 
-container.insertBefore(newDiv, h1);
+// container.insertBefore(newDiv, h1);
 
-let itemdiv = document.createElement("div");
-let itemDivText = document.createTextNode("Hello");
-itemdiv.appendChild(itemDivText);
-itemdiv.style.fontWeight = "bold";
-console.log(itemdiv);
-let item = document.querySelector("li");
-console.log(item);
-let group = document.querySelector("#items");
-group.insertBefore(itemdiv, item);
+// let itemdiv = document.createElement("div");
+// let itemDivText = document.createTextNode("Hello");
+// itemdiv.appendChild(itemDivText);
+// itemdiv.style.fontWeight = "bold";
+// console.log(itemdiv);
+// let item = document.querySelector("li");
+// console.log(item);
+// let group = document.querySelector("#items");
+// group.insertBefore(itemdiv, item);
+// console.log(items.parentElement);
+
+var form = document.getElementById("addForm");
+var itemList = document.getElementById("items");
+form.addEventListener("submit", addItem);
+itemList.addEventListener("click", removeItem);
+
+function addItem(e) {
+  e.preventDefault();
+  var newItem = document.getElementById("item").value;
+  let li = document.createElement("li");
+  li.className = "list-group-item";
+  li.appendChild(document.createTextNode(newItem));
+
+  var deleteBtn = document.createElement("button");
+  deleteBtn.className = "btn btn-danger btn-sm float-right delete";
+  deleteBtn.appendChild(document.createTextNode("X"));
+  li.appendChild(deleteBtn);
+
+  var editBtn = document.createElement("button");
+  editBtn.className = "btn btn-danger btn-sm float-right delete";
+  editBtn.appendChild(document.createTextNode("Edit"));
+  li.appendChild(editBtn);
+
+  itemList.appendChild(li);
+}
+
+function removeItem(e) {
+  if (e.target.classList.contains("delete")) {
+    if (confirm("Are You Sure?")) {
+      var li = e.target.parentElement;
+      itemList.removeChild(li);
+    }
+  }
+}
